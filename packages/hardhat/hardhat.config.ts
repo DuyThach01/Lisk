@@ -31,7 +31,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "localhost",
+  defaultNetwork: "liskSepolia",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -95,6 +95,11 @@ const config: HardhatUserConfig = {
       url: "https://rpc.chiadochain.net",
       accounts: [deployerPrivateKey],
     },
+    liskSepolia: {
+      url: "https://rpc.sepolia-api.lisk.com",
+      accounts: [deployerPrivateKey],
+      chainId: 4202,
+    },
     base: {
       url: `https://base-mainnet.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
@@ -140,19 +145,30 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
   },
-  // configuration for harhdat-verify plugin
+  // Configuration for etherscan-verify and Blockscout
   etherscan: {
-    apiKey: `${etherscanApiKey}`,
+    apiKey: {
+      liskSepolia: process.env.ETHERSCAN_API_KEY || "YOUR_BLOCKSCOUT_API_KEY"
+    },
+    customChains: [
+      {
+        network: "liskSepolia",
+        chainId: 4202,
+        urls: {
+          apiURL: "https://sepolia-blockscout.lisk.com/api",
+          browserURL: "https://sepolia-blockscout.lisk.com"
+        }
+      }
+    ]
   },
-  // configuration for etherscan-verify from hardhat-deploy plugin
   verify: {
     etherscan: {
-      apiKey: `${etherscanApiKey}`,
-    },
+      apiKey: process.env.ETHERSCAN_API_KEY || "YOUR_BLOCKSCOUT_API_KEY"
+    }
   },
   sourcify: {
-    enabled: false,
-  },
+    enabled: false
+  }
 };
 
 export default config;
