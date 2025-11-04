@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd packages/nextjs && yarn build",
+  "buildCommand": "yarn workspace @se-2/nextjs build",
   "outputDirectory": "packages/nextjs/.next",
-  "installCommand": "yarn install --frozen-lockfile",
+  "installCommand": "yarn install --immutable=false",
   "framework": "nextjs"
 }
