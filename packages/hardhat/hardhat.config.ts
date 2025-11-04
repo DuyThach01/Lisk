@@ -132,10 +132,6 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.rpc.zora.energy",
       accounts: [deployerPrivateKey],
     },
-    liskSepolia: {
-      url: "https://rpc.sepolia-api.lisk.com",
-      accounts: [deployerPrivateKey],
-    },
     mode: {
       url: "https://mainnet.mode.network",
       accounts: [deployerPrivateKey],

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Address as AddressType, getAddress, isAddress } from "viem";
 import { hardhat } from "viem/chains";
 import { useEnsAvatar, useEnsName } from "wagmi";
@@ -36,6 +35,16 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
   const checkSumAddress = address ? getAddress(address) : undefined;
+  const handleCopy = async () => {
+    if (!checkSumAddress) return;
+    try {
+      await navigator.clipboard.writeText(checkSumAddress);
+      setAddressCopied(true);
+      setTimeout(() => setAddressCopied(false), 800);
+    } catch (_) {
+      // noop
+    }
+  };
 
   const { targetNetwork } = useTargetNetwork();
 
@@ -116,20 +125,12 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
           aria-hidden="true"
         />
       ) : (
-        <CopyToClipboard
-          text={checkSumAddress}
-          onCopy={() => {
-            setAddressCopied(true);
-            setTimeout(() => {
-              setAddressCopied(false);
-            }, 800);
-          }}
-        >
+        <button type="button" onClick={handleCopy} aria-label="Copy address">
           <DocumentDuplicateIcon
             className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
             aria-hidden="true"
           />
-        </CopyToClipboard>
+        </button>
       )}
     </div>
   );
