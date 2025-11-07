@@ -29,12 +29,16 @@
     "next:format": "yarn workspace @se-2/nextjs format",
     "next:check-types": "yarn workspace @se-2/nextjs check-types",
     "next:build": "yarn workspace @se-2/nextjs build",
-    "postinstall": "husky install",
+    "postinstall": "if [ -n \"$CI\" ]; then echo 'CI detected, skipping husky install'; else husky install; fi",
     "precommit": "lint-staged",
     "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
+    "preinstall": "echo Node $(node -v) && (python3 --version || true) && (python3 -m ensurepip -U || true) && (python3 -m pip install --user setuptools wheel || true)"
   },
   "packageManager": "yarn@3.2.3",
+  "engines": {
+    "node": "22.x"
+  },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
