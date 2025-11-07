@@ -1,6 +1,14 @@
 {
   "buildCommand": "cd packages/nextjs && yarn build",
   "outputDirectory": "packages/nextjs/.next",
-  "installCommand": "yarn install --frozen-lockfile",
-  "framework": "nextjs"
+  "installCommand": "yarn install --immutable --network-timeout 300000",
+  "framework": "nextjs",
+  "nodeVersion": "20.x",
+  "regions": ["hkg1"],
+  "builds": [
+    {
+      "src": "packages/nextjs/package.json",
+      "use": "@vercel/next"
+    }
+  ]
 }
